@@ -1,3 +1,12 @@
+/*=============================================================================
+author        :Walter Schreppers
+filename      :numbers.h
+description   :This is actually a value class (stores numbers,strings from 
+               results in expressions). 
+=============================================================================*/
+
+
+
 //typedef double number;
 //number class to store variables ...
 

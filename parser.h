@@ -1,7 +1,7 @@
 /*=============================================================================
 author        :Walter Schreppers
 filename      :parser.h
-description   :Parse source code by calling lexer repeadetly and build a tree
+description   :Parse source code by calling lexer and build a tree
                so that it can be executed by Executer
 bugreport(log):/
 =============================================================================*/

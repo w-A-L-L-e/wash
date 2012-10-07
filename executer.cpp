@@ -1,3 +1,11 @@
+/*=============================================================================
+author        : Walter Schreppers
+filename      : executer.cpp
+description   : Takes a parse tree and executes the nodes
+bugreport(log):/
+=============================================================================*/
+
+
 #include "executer.h"
 
 

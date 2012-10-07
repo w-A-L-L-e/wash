@@ -1,3 +1,11 @@
+/*=============================================================================
+author        : Walter Schreppers
+filename      : lexer.cpp
+description   : Converts an imput stream into tokens for parsing 
+bugreport(log):/
+=============================================================================*/
+
+
 #include "lexer.h"
 
 Lexer::~Lexer(){

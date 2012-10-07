@@ -1,7 +1,8 @@
 /*=============================================================================
 author        :Walter Schreppers
 filename      :treenode.h
-description   :A node in an n-ary tree
+description   :A node in an n-ary tree. We store our parsed program in an n-tree
+               The executer class can then later recursively execute this tree.
 bugreport(log):/
 =============================================================================*/
 

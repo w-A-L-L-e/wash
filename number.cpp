@@ -1,3 +1,13 @@
+/*=============================================================================
+author        :Walter Schreppers
+filename      :numbers.cpp
+description   :This is actually a value class (stores numbers,strings from 
+               results in expressions). Works ok, but I've written a much more
+               efficient one in the past. Will get around to improving this in
+               future once the other todo's are done.
+=============================================================================*/
+
+
 #include "number.h"
 
 

@@ -1,3 +1,23 @@
+/*=============================================================================
+author        : Walter Schreppers
+filename      : wash.cpp
+description   : Shell emulation. You can either enter commands or start typing
+                a script.
+bugreport(log): This is new written on a sunday and has some bugs.
+                Most important todo's:
+                - executing commands with arguments (now only things like ls,
+                  top, vim work now but only when no extra arguments are given)
+                - make our syntax a bit different (don't require begin/end for
+                  main block). => Also we want it so that when you type if bla
+                  it should start reading further the script until we hit the end.
+
+                - Improve auto completion (just copied from web and made it so
+                  it doesn't segfault, but we need to implement further...).
+                - Improve forking (we want just like bash to show that wash is
+                  the ppid).
+=============================================================================*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>

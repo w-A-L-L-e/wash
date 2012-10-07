@@ -1,3 +1,12 @@
+/*=============================================================================
+author        :Walter Schreppers
+filename      :main.cpp
+description   :The original wsbasic main
+               Nice and clean. Just type ./wsbasic somescript.b and it executes
+               that. Look in examples for some example scripts ....
+=============================================================================*/
+
+
 #include "parser.h"
 #include "executer.h"
 

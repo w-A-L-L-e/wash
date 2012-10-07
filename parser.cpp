@@ -1,3 +1,13 @@
+/*=============================================================================
+author        :Walter Schreppers
+filename      :parser.cpp
+description   :Parse source code by calling lexer and build a tree
+               so that it can be executed by Executer
+bugreport(log):/
+=============================================================================*/
+
+
+
 #include "parser.h"
 
 /*======================= THE GRAMMAR =============================

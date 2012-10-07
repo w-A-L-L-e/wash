@@ -29,6 +29,10 @@ README.md    executer.cpp executer.o   lexer.h      main.cpp     number.cpp   nu
 wash$ begin println("hello world") println(3*4) end
 hello world
 12
+
+wash$ begin a=run("date") println("the date is "+a) end
+the date is Sun Oct  7 23:15:32 CEST 2012
+
 wash$ exit
 
 Walters-MacBook-Pro:wash wschrep$

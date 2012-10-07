@@ -99,7 +99,8 @@ int main()
     rl_attempted_completion_function = my_completion;
  
     cout << "WASH is an awesome bash alternative written by Walter Schreppers on a sunday 7/10/2012 ;)" <<endl;
-    cout << "Typing quit is the only way to exit !"<<endl;
+    cout << "Typing quit or exit is the only way to exit !"<<endl;
+    cout << "Auto completion is partly implemented, also command history is done with arrow keys up/down."<<endl<<endl;
     signal(SIGINT, handleSignals);
 
     while(true) {

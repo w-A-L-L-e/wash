@@ -1,0 +1,182 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <string.h>
+#include <unistd.h>
+#include <signal.h>
+
+#include <iostream>
+#include <string>
+#include "parser.h"
+#include "executer.h"
+using namespace std;
+
+//these will change... will rewrite this stuff
+static char** my_completion(const char*, int ,int);
+char* my_generator(const char*,int);
+char * dupstr (char*);
+void *xmalloc (int);
+ 
+//We need 2 globals (the pid and command auto completion)
+char* cmd [] ={ "hello", "world", "hell" ,"word", "quit", " ", 0 };
+pid_t pID=1; //stores process id of forked process
+
+
+/*****************************************************************************************************************
+Function    : execute
+Parameters  : char* with command to run
+Description : This forks our application and runs the executable in foreground (it inherits the tty)
+*****************************************************************************************************************/
+void execute( char* cmd ){
+  if (pID == 0){      //child process that executes the wanted command
+    execlp(cmd, cmd,(char*)0); //this never returns, hence the reason to fork.
+    cerr<<"- wash: "<< string(cmd)<<": command not found"<<endl;  //If it returns the process has failed to start!
+
+     _exit(0);        // If exec fails then exit forked process.
+  }
+  else if (pID < 0){  //fork failed
+     cerr << "Failed to fork for executing a command!" << endl;
+  }
+  else{               //main process
+      //first try to parse the cmd with our parser
+      //string command = string( cmd );
+      istringstream script( cmd );
+      Parser wash( script );
+      if( wash.parse() ){ //go and execute our expressions
+        TreeNode* root=wash.getTree();
+        //  root->showTree(root); //show parsetree
+        Executer exe(root); //execute this tree
+        exe.run();          //executed our script
+      }
+      else{
+        //Parsing failed so we run an executable now by forking!
+        pID=fork();
+      } 
+  }
+}
+
+
+/*****************************************************************************************************************
+Function    : handleSignals 
+Parameters  : int sig
+Description : This catches things like ctrl-c -> we just override it and reset this custom signal handler
+              that way we have bash-like behaviour and our shell only exits when you type 'quit'
+*****************************************************************************************************************/
+void handleSignals( int sig ){
+  signal(sig, SIG_IGN); //ignore the default behaviour
+  cout << endl <<"wash$ "<<flush; //just output newline like bash does it ;)
+      
+  //catch next signal also
+  signal( SIGINT, handleSignals );
+}
+
+int main()
+{
+    char *buf;
+    int exitStat;
+    string command = "";
+    rl_attempted_completion_function = my_completion;
+ 
+    cout << "WASH is an awesome bash alternative written by Walter Schreppers on a sunday 7/10/2012 ;)" <<endl;
+    cout << "Typing quit is the only way to exit !"<<endl;
+    signal(SIGINT, handleSignals);
+
+    while(true) {
+        if( pID != 0 ){ //master process
+          wait(&exitStat); //wait for our child to finish first!!!
+
+          //read a new command
+          buf = readline("wash$ ");
+          if( buf == NULL ) break;
+
+          //enable auto-complete
+          rl_bind_key('\t',rl_complete);
+ 
+          if (strcmp(buf,"quit")==0)
+            break; //exit our shell
+          if (strcmp(buf,"exit")==0)
+            break; //exit our shell
+
+          if (buf[0]!=0){
+            add_history(buf);
+            execute( buf );
+          }
+        }
+        else if (pID<0){
+          cerr <<"Fork failed"<<endl;
+        }
+        else{ //this execute actually performs the child process!
+          if( buf != NULL ) execute( buf );
+        }
+    }
+ 
+    free(buf);
+    return 0;
+}
+ 
+
+//todo: need to rewrite the completion function... 
+static char** my_completion( const char * text , int start,  int end)
+{
+    char **matches;
+ 
+    matches = (char **)NULL;
+ 
+    //we only do this if it's with a start at 0 meaning you tab on empty prompt
+    if (start == 0) matches = rl_completion_matches ((char*)text, &my_generator);
+    //else //not needed, the else just borks us here
+    //  rl_bind_key('\t',rl_insert);
+ 
+    return (matches);
+ 
+}
+
+//todo :need to rewrite this to c++, copied+bugfixed this from the web but it's cryptic and not what we want...
+char* my_generator(const char* text, int state)
+{
+    static int list_index, len;
+    char *name;
+ 
+    if (!state) {
+        list_index = 0;
+        len = strlen (text);
+    }
+ 
+    //while (name = cmd[list_index]) { //original code from net
+    while ((name = cmd[list_index]) && cmd[list_index] != 0 ){ //add a check for end of list to avoid segfaults ;)
+        list_index++;
+ 
+        if (strncmp (name, text, len) == 0)
+            return (dupstr(name));
+    }
+ 
+    /* If no names matched, then return NULL. */
+    return ((char *)NULL);
+ 
+}
+
+
+//dupstr and xmalloc are not needed if we write this properly...
+char * dupstr (char* s) {
+  char *r;
+ 
+  r = (char*) xmalloc ((strlen (s) + 1));
+  strcpy (r, s);
+  return (r);
+}
+ 
+void * xmalloc (int size)
+{
+    void *buf;
+ 
+    buf = malloc (size);
+    if (!buf) {
+        fprintf (stderr, "Error: Out of memory. Exiting.'n");
+        exit (1);
+    }
+ 
+    return buf;
+}
+
+

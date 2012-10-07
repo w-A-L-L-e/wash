@@ -1,0 +1,14 @@
+ls( arg )
+begin
+  println "ls received arg="+arg
+  return 3
+end
+
+begin
+
+  b=ls( 2 )
+  println ls(3)
+  println b*3
+
+end
+

@@ -19,9 +19,12 @@ WASH is an awesome bash alternative written by Walter Schreppers on a sunday 7/1
 Typing quit is the only way to exit !
 
 wash$ ls
+
 Makefile     examples     executer.h   lexer.cpp    lexer.o      ntree.cpp    number.h     parser.cpp   parser.o     treenode.cpp treenode.o   wash.cpp     wsbasic
 README.md    executer.cpp executer.o   lexer.h      main.cpp     number.cpp   number.o     parser.h     tokens.h     treenode.h   wash         wash.o
+
 wash$ begin println("hello world") println(3*4) end
+
 hello world
 12
 

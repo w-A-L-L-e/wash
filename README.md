@@ -30,14 +30,22 @@ wash$ begin println("hello world") println(3*4) end
 hello world
 12
 
-wash$ begin a=run("date") println("the date is "+a) end
-the date is Sun Oct  7 23:15:32 CEST 2012
+wash$ begin a=run("date") println("The date is "+a) end
+The date is Sun Oct  7 23:15:32 CEST 2012
 
+wash$ begin for i=1 to 5 print( run("date") ) end
+Mon Oct  8 10:05:48 CEST 2012
+Mon Oct  8 10:05:48 CEST 2012
+Mon Oct  8 10:05:48 CEST 2012
+Mon Oct  8 10:05:48 CEST 2012
+Mon Oct  8 10:05:48 CEST 2012
 wash$ exit
 
 Walters-MacBook-Pro:wash wschrep$
 ```
 It's verry early alpha fase now. Not ready to use as main shell yet. For instance running any commands like top, ls, vim etc all work but you can't pass arguments yet ;)
-Also the begin end for the main block will be removed so you can just type println(4*5 ) or any expression you want... 
+Also the begin end for the main block will become optional so you can just type any expression you want at prompt like print(3*8) and if it parses it's executed otherwise it tries
+to find an executable called print etc...
 Look in examples for some working scripts: it's already a complete programming language with functions and forloops etc. Just need to tweak it a bit to make it shell friendly...
+
 

@@ -64,13 +64,6 @@ void Parser::getToken(){
 }
 
 
-bool Parser::parse(){
-  bNoErrors=true;
-  getToken();
-  tree=Program();
-  return bNoErrors;
-}
-
 
 TreeNode* Parser::getTree(){
   return tree;
@@ -772,6 +765,33 @@ TreeNode* Parser::Program(){
   return program;
 }
 
+
+bool Parser::parse(){
+  bNoErrors=true;
+  getToken();
+  tree=Program();
+  return bNoErrors;
+}
+
+
+//little hacky, we append a 
+bool Parser::parseStatement(){
+  bNoErrors=true;
+  getToken();
+  //tree = Statement();
+  TreeNode *program = new TreeNode( programNode, row, col );
+  program->setName("single_shell_command");
+
+  TreeNode *block=new TreeNode( blockNode, row, col );
+  while( (look.type!=tokEnd) && (look.type!=tokEof) ){
+    block->appendChild( Statement() );
+  }
+  if( look.type == tokEnd ) Match(tokEnd);
+  program->appendChild( block );
+  
+  tree = program;
+  return bNoErrors;
+}
 
 
 /*

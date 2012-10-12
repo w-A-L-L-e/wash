@@ -50,6 +50,8 @@ class Parser{
     //public members
     //==============        
     bool parse();
+    bool parseStatement();
+
     TreeNode* getTree();
         
   

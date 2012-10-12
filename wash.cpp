@@ -28,6 +28,8 @@ bugreport(log): This is new written on a sunday and has some bugs.
 
 #include <iostream>
 #include <string>
+#include <vector>
+
 #include "parser.h"
 #include "executer.h"
 using namespace std;
@@ -41,6 +43,11 @@ void *xmalloc (int);
 //We need 2 globals (the pid and command auto completion)
 char* cmd [] ={ "hello", "world", "hell" ,"word", "quit", " ", 0 };
 pid_t pID=1; //stores process id of forked process
+
+//try a c++ version here?
+//vector<string> commands;
+   
+
 
 
 /*****************************************************************************************************************
@@ -59,20 +66,25 @@ void execute( char* cmd ){
      cerr << "Failed to fork for executing a command!" << endl;
   }
   else{               //main process
-      //first try to parse the cmd with our parser
-      //string command = string( cmd );
-      istringstream script( cmd );
+      istringstream script(cmd);
       Parser wash( script );
-      if( wash.parse() ){ //go and execute our expressions
+      bool shellCommand=true;
+      while( wash.parseStatement() ){ //go and execute our expressions
+        shellCommand=false;
         TreeNode* root=wash.getTree();
         //  root->showTree(root); //show parsetree
         Executer exe(root); //execute this tree
         exe.run();          //executed our script
+
+        //delete( root );
+        break; //in future read another line here...
       }
-      else{
+
+      if(shellCommand) { //parse failed
         //Parsing failed so we run an executable now by forking!
         pID=fork();
       } 
+
   }
 }
 
@@ -97,7 +109,7 @@ int main()
     int exitStat;
     string command = "";
     rl_attempted_completion_function = my_completion;
- 
+    
     cout << "WASH is an awesome bash alternative written by Walter Schreppers on a sunday 7/10/2012 ;)" <<endl;
     cout << "Typing quit or exit is the only way to exit !"<<endl;
     cout << "Auto completion is partly implemented, also command history is done with arrow keys up/down."<<endl<<endl;
@@ -163,7 +175,21 @@ char* my_generator(const char* text, int state)
         list_index = 0;
         len = strlen (text);
     }
- 
+
+    /*cpp version is broke :(
+    string inputText(text);
+
+    for( unsigned int i=0;i<commands.size();i++){
+      //if ( commands[i] == inputText ){
+        return (char*)commands[i].c_str();
+      //}
+      //else{
+       // cout << "commands[i]="<<commands[i]<<endl;
+       // cout << "inputText  ="<<inputText<<endl;
+      //}
+    }
+    */
+
     //while (name = cmd[list_index]) { //original code from net
     while ((name = cmd[list_index]) && cmd[list_index] != 0 ){ //add a check for end of list to avoid segfaults ;)
         list_index++;
@@ -171,7 +197,7 @@ char* my_generator(const char* text, int state)
         if (strncmp (name, text, len) == 0)
             return (dupstr(name));
     }
- 
+
     /* If no names matched, then return NULL. */
     return ((char *)NULL);
  

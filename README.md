@@ -84,6 +84,22 @@ Fri Oct 12 14:50:29 CEST 2012
 wash$ exit
 Walters-MacBook-Pro:wash wschrep$
 ```
+
+Also you now have a full calculator right in your shell, just use println to execute some expressions:
+
+```
+wash$ println ( (2*3)+4000/6 )
+672.667
+wash$ println ( 2*3+4000/6 )
+672.667
+wash$ println ( ((2*3)+4000)/6 )
+667.667
+wash$ println( 4006/6 )
+667.667
+```
+
+
+
 It's verry early alpha fase now. Not ready to use as main shell yet. For instance running any commands like top, ls, vim etc all work but you can't pass arguments yet ;)
 Need to work on functions and multiple line scripts in interactive mode. Already fixed the feature so you don't need to enter begin/end around a single statement and added {,} shortcuts to
 define scopes/blocks like in c.
@@ -103,5 +119,4 @@ Walters-MacBook-Pro:wash wschrep$ ls -lh wash
 Walters-MacBook-Pro:wash wschrep$ ls -lh /bin/bash 
 -r-xr-xr-x  1 root  wheel   1.3M Apr 17 20:34 /bin/bash
 ```
-
 

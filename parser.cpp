@@ -196,7 +196,7 @@ TreeNode* Parser::substrFunction(){
 
 string Parser::tokenError( token& token ){
   ostringstream os;
-  os << "type="<<token.type<<" str="<<token.str<<" val="<<token.val;
+  os << " [ type="<<token.type<<" str="<<token.str<<" val="<<token.val<< " ] ";
   return os.str();
 }
 

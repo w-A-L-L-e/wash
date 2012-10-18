@@ -85,7 +85,7 @@ wash$ exit
 Walters-MacBook-Pro:wash wschrep$
 ```
 
-Also you now have a full calculator right in your shell, just use println to execute some expressions:
+Also you now have a full calculator right in your shell, just use println to execute some expressions, here I show that operator presedence and braces work like you'd expect:
 
 ```
 wash$ println ( (2*3)+4000/6 )
@@ -96,6 +96,11 @@ wash$ println ( ((2*3)+4000)/6 )
 667.667
 wash$ println( 4006/6 )
 667.667
+wash$ println( 4000/6 )
+666.667
+wash$ println( 4000/6+6 )
+672.667
+
 ```
 
 

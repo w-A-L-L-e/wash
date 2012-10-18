@@ -35,6 +35,7 @@ int main(int argc, char** arg){
   }
   else{
     cerr<<"Parsing failed!"<<endl;
+    cerr<<parser.getErrors()<<endl;
   }
   
   return 0;

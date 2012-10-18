@@ -196,6 +196,9 @@ token Lexer::lex(){
   }
   else{
     switch(look){
+      //add begin end as c-style brackets {}
+      case '{': t.type=tokBegin; break;
+      case '}': t.type=tokEnd; break;
       case '>': if( getChar() == '=' ){
                   t.type=tokGe;
                 }

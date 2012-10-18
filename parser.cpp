@@ -30,16 +30,33 @@ bugreport(log):/
     <b-factor>    ::= <b-literal> | <b-variable> | (<b-expression>)
 
 =================================================================*/
-
 Parser::Parser( ifstream& script ){
   lexer = new Lexer( script );
   tree  = new TreeNode();
+  sParseErrors = "";
+  bNoErrors = true;
 }
+
 
 Parser::Parser( istream& script ){
   lexer = new Lexer( script );
   tree  = new TreeNode();
+  sParseErrors = "";
+  bNoErrors = true;
 }
+
+Parser::Parser(){
+  sParseErrors = "Missing script! Call setScript with an istream or give a non empty file";
+  bNoErrors = false;
+}
+
+void Parser::setScript( istream& script ){
+  lexer = new Lexer( script );
+  tree  = new TreeNode();
+  bNoErrors = false;
+  sParseErrors = "";
+}
+
 
 Parser::~Parser(){
   delete lexer;
@@ -50,6 +67,10 @@ void Parser::Error(const string& s){
   //We silence all errors as with wash if it's not a script it's most likely an executable like 'ls' or 'df -h' or 'ifconfig'
   //cerr<<"Error: "<< s <<" at row "<<row <<" , col "<< col <<"."<<endl;
     //exit(1); // better = throw exception here!
+  ostringstream pos;
+  pos << " at row "<<row <<" , col "<< col <<"."<<endl;
+  sParseErrors += s+pos.str();
+
   bNoErrors=false;
 }
 
@@ -173,6 +194,12 @@ TreeNode* Parser::substrFunction(){
   return n;
 }
 
+string Parser::tokenError( token& token ){
+  ostringstream os;
+  os << "type="<<token.type<<" str="<<token.str<<" val="<<token.val;
+  return os.str();
+}
+
 
 /*---------------------------------------------------------------*/
 /* Parse and Translate a Math Factor */
@@ -207,7 +234,7 @@ TreeNode* Parser::Factor()
     case tokRun:    n=runFunction();     break;
     case tokSubstr: n=substrFunction();  break;
                                     
-    default:        Error("Illegal char in expression");
+    default:        Error("Illegal char "+tokenError(look)+"in expression");
                     n=new TreeNode( Unknown, row, col );
                     getToken();
                     break;
@@ -768,6 +795,7 @@ TreeNode* Parser::Program(){
 
 bool Parser::parse(){
   bNoErrors=true;
+  sParseErrors = "";
   getToken();
   tree=Program();
   return bNoErrors;
@@ -777,6 +805,7 @@ bool Parser::parse(){
 //little hacky, we append a 
 bool Parser::parseStatement(){
   bNoErrors=true;
+  sParseErrors = "";
   getToken();
   //tree = Statement();
   TreeNode *program = new TreeNode( programNode, row, col );

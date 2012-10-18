@@ -43,6 +43,8 @@ class Parser{
   public:
     //constructor and destructor
     //==========================
+    Parser(); //default constructor, requeres the use of setScript in a later call!
+    
     Parser( ifstream& script );
     Parser( istream& script ); //ifstream or istringstream allowed here!
     ~Parser();
@@ -51,6 +53,8 @@ class Parser{
     //==============        
     bool parse();
     bool parseStatement();
+    string getErrors(){ return sParseErrors; } //if parse failed we fetch the errors with this function
+    void setScript( istream& script );
 
     TreeNode* getTree();
         
@@ -66,6 +70,7 @@ class Parser{
     void Match(int);
     void Error(const string&);
     void Expected(const string&);
+    string tokenError( token& ); //give back token that gave illegal char in expression or whatnot
 
     TreeNode* Program();
     TreeNode* Function();
@@ -109,6 +114,7 @@ class Parser{
     
     TreeNode* tree; 
     bool bNoErrors;
+    string sParseErrors; //store our errors for later output
     int row,col;
 };
 

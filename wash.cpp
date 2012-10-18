@@ -47,7 +47,8 @@ pid_t pID=1; //stores process id of forked process
 //try a c++ version here?
 //vector<string> commands;
    
-
+//one global parser to rule them all!
+Parser wash;
 
 
 /*****************************************************************************************************************
@@ -58,8 +59,13 @@ Description : This forks our application and runs the executable in foreground (
 void execute( char* cmd ){
   if (pID == 0){      //child process that executes the wanted command
     execlp(cmd, cmd,(char*)0); //this never returns, hence the reason to fork.
-    cerr<<"- wash: "<< string(cmd)<<": command not found"<<endl;  //If it returns the process has failed to start!
 
+    if( wash.getErrors().size()>0 ){
+      cerr << wash.getErrors() << endl;
+    }
+    else{
+      cerr<<"- wash: "<< string(cmd)<<": command not found"<<endl;  //If it returns the process has failed to start!
+    }
      _exit(0);        // If exec fails then exit forked process.
   }
   else if (pID < 0){  //fork failed
@@ -67,12 +73,14 @@ void execute( char* cmd ){
   }
   else{               //main process
       istringstream script(cmd);
-      Parser wash( script );
+      //Parser wash( script );
+      wash.setScript( script );
       bool shellCommand=true;
+      cout << "will parse following: "<<string(cmd)<<endl;
       while( wash.parseStatement() ){ //go and execute our expressions
         shellCommand=false;
         TreeNode* root=wash.getTree();
-        //  root->showTree(root); //show parsetree
+        root->showTree(root); //show parsetree
         Executer exe(root); //execute this tree
         exe.run();          //executed our script
 

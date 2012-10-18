@@ -34,7 +34,7 @@ bugreport(log): This is new written on a sunday and has some bugs.
 #include "executer.h"
 using namespace std;
 
-#include <sys/wait.h> //for ubuntu
+#include <sys/wait.h> //to wait for forked process to finish
 
 //these will change... will rewrite this stuff
 static char** my_completion(const char*, int ,int);
@@ -79,11 +79,15 @@ void execute( char* cmd ){
       //Parser wash( script );
       wash.setScript( script );
       bool shellCommand=true;
+#ifdef _DEBUG_
       cout << "will parse following: "<<string(cmd)<<endl;
+#endif
       while( wash.parseStatement() ){ //go and execute our expressions
         shellCommand=false;
         TreeNode* root=wash.getTree();
+#ifdef _DEBUG_
         root->showTree(root); //show parsetree
+#endif
         Executer exe(root); //execute this tree
         exe.run();          //executed our script
 

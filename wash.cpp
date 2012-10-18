@@ -34,6 +34,8 @@ bugreport(log): This is new written on a sunday and has some bugs.
 #include "executer.h"
 using namespace std;
 
+#include <sys/wait.h> //for ubuntu
+
 //these will change... will rewrite this stuff
 static char** my_completion(const char*, int ,int);
 char* my_generator(const char*,int);
@@ -41,7 +43,8 @@ char * dupstr (char*);
 void *xmalloc (int);
  
 //We need 2 globals (the pid and command auto completion)
-char* cmd [] ={ "hello", "world", "hell" ,"word", "quit", " ", 0 };
+//The casts get rid of all warnings, but jeeez going to std::vector instead because this is uuuuugly :(
+char* cmd [] ={ (char*)"hello", (char*)"world", (char*)"hell" ,(char*)"word", (char*)"quit", (char*)" ", 0 };
 pid_t pID=1; //stores process id of forked process
 
 //try a c++ version here?
@@ -113,9 +116,9 @@ void handleSignals( int sig ){
 
 int main()
 {
-    char *buf;
-    int exitStat;
-    string command = "";
+    char *buf       = NULL;
+    int exitStatus  = 0;
+    string command  = "";
     rl_attempted_completion_function = my_completion;
     
     cout << "WASH is an awesome bash alternative written by Walter Schreppers on a sunday 7/10/2012 ;)" <<endl;
@@ -125,7 +128,7 @@ int main()
 
     while(true) {
         if( pID != 0 ){ //master process
-          wait(&exitStat); //wait for our child to finish first!!!
+          ::wait(&exitStatus); //wait for our child to finish first!!!
 
           //read a new command
           buf = readline("wash$ ");

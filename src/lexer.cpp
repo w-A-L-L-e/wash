@@ -178,8 +178,19 @@ token Lexer::lex(){
   skipComment();
   skipWhite();
   
-  char look=getChar();
-  
+  int look=getChar();
+
+
+#ifdef _DEBUG_
+  cout << "lexer fetched token [" << look <<"]"<<endl;
+#endif
+ 
+  //bugpatch here somehow the in->eof() is not working for us in latest ubuntu:(
+  if( look < 0 ){
+    t.type=tokEof;
+    return t;
+  }
+ 
   if(in->eof()){
     t.type=tokEof;
     return t;

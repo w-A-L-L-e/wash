@@ -114,6 +114,15 @@ wash$ println( 4000/6 )
 wash$ println( 4000/6+6 )
 672.667
 
+Syntax etc is getting more type friendly every day ;)
+
+wash$ for i=1 to 5 print run("date")
+Fri Oct 19 17:28:24 CEST 2012
+Fri Oct 19 17:28:24 CEST 2012
+Fri Oct 19 17:28:24 CEST 2012
+Fri Oct 19 17:28:24 CEST 2012
+Fri Oct 19 17:28:24 CEST 2012
+
 ```
 
 

@@ -60,6 +60,8 @@ Parameters  : char* with command to run
 Description : This forks our application and runs the executable in foreground (it inherits the tty)
 *****************************************************************************************************************/
 void execute( char* cmd ){
+  bool shellCommand=true;
+
   if (pID == 0){      //child process that executes the wanted command
 
 #ifdef _DEBUG_
@@ -68,11 +70,11 @@ void execute( char* cmd ){
 
     execlp(cmd, cmd,(char*)0); //this never returns, hence the reason to fork.
 
-    if( wash.getErrors().size()>0 ){
-      cerr << wash.getErrors() << endl;
+    if( shellCommand ){
+      cerr<<"- wash: "<< string(cmd)<<": command not found"<<endl;  //If it returns the process has failed to start!
     }
     else{
-      cerr<<"- wash: "<< string(cmd)<<": command not found"<<endl;  //If it returns the process has failed to start!
+      cerr << wash.getErrors() << endl;
     }
      _exit(0);        // If exec fails then exit forked process.
   }
@@ -81,17 +83,16 @@ void execute( char* cmd ){
   }
   else{               //main process
     try{
-      command.assign(cmd, strlen(cmd));
+      command.assign(strdup(cmd), strlen(cmd));
       istringstream script(command);
       //Parser wash( script );
       wash.setScript( script );
-      bool shellCommand=true;
 #ifdef _DEBUG_
       cout << "will parse following: "<<string(command)<<endl;
 #endif
       while( wash.parseStatement() ){ //go and execute our expressions
-        shellCommand=false;
         TreeNode* root=wash.getTree();
+        shellCommand=false;
 #ifdef _DEBUG_
         root->showTree(root); //show parsetree
 #endif

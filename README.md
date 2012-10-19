@@ -165,10 +165,11 @@ TODO:
 ```
 pipes aka cat bla.txt | grep "something"
 
-fix bug in multi arg commands (it's allmost good enough for me to use it as bash replacement, once this bug is squashed ;) as piping can be done already with stat=run("some command") etc.).
 .washrc like .bashrc => especially for the path which is now hardcoded to : /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/CrossPack-AVR/bin
 
 improve auto completion (it's already better than few days ago http://web.mit.edu/gnu/doc/html/rlman_2.html ).
+
+it's still alpha but a few more hours coding and I can use this daily at work instead of bash ;)
 ```
 
 

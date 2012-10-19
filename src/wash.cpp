@@ -128,12 +128,15 @@ void execute_shell( const string& command ){
   unsigned int pos = 0;
   while( pos < command.size() ){
     string word="";
-    while( ( pos<command.size() ) && ( !isspace(command[pos] ) ) ){
+    while( ( pos<command.size() ) && ( !isspace(command[pos] ) ) && (command[pos]!='|') ){
       word+= command[pos];
       pos++;
     }
-    pos++;//skip the space
     words.push_back( word );
+    if( command[pos] == '|' ) {
+      cout << "TODO:handle pipe here!!!!" <<endl;
+    } 
+    pos++;//skip the space or pipe
   }
 
   char** argv=(char**) malloc( words.size()+1 );

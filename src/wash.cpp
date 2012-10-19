@@ -77,7 +77,7 @@ char* cmd [] ={
 //these will change... will rewrite this stuff
 static char** my_completion(const char*, int ,int);
 char*         my_generator(const char*,int);
-char*         dupstr (char*);
+char*         dupstr (const char*);
 void*         xmalloc (int);
 pid_t         pID=1;            //stores process id of forked process
 
@@ -117,7 +117,36 @@ string rl_gets (){
 }
 
 
+//splits up the command in seperate strings to pass to execvp
+//THIS IS STILL BUGGY but works better than having no command args!
+void execute_shell( const string& command ){
+  vector<string> words;
+  
+  //ugh been a while since i used std::string iterators, for now just forloop it with uint ;)
+  //we split up our command string in words so we can create our argv array later
+  unsigned int pos = 0;
+  while( pos < command.size() ){
+    string word="";
+    while( ( pos<command.size() ) && ( !isspace(command[pos] ) ) ){
+      word+= command[pos];
+      pos++;
+    }
+    pos++;//skip the space
+    words.push_back( word );
+  }
 
+  //argv = ddmalloc( words.size() );
+  char** argv=(char**) malloc( words.size()+2 );
+  
+  for( unsigned int i=0;i<words.size();i++){
+    //dcout << "words["<<i<<"]="<<words[i]<<endl;
+    argv[i] = dupstr( words[i].c_str() );
+  }
+  argv[words.size()]=(char*)NULL;
+
+  //somehow argv is not yet build up correctly TODO HERE!!!. Also the second param is the path here, we need something like PATH=$PATH:... equivalent for wash!
+  execvP( argv[0], "/usr/bin:/bin", argv );
+}
 
 
 /*****************************************************************************************************************
@@ -132,7 +161,9 @@ void execute( const string& command ){
       #ifdef _DEBUG_
           cout << "before execlp" <<endl;
       #endif
-    execlp(command.c_str(), command.c_str(),(char*)0); //this never returns, hence the reason to fork.
+    //shell_execute( command );
+    //execlp(command.c_str(), "" ,(char*)0); //this never returns, hence the reason to fork. -> also we can't easily add arguments here we need execvP instead!
+    execute_shell( command );
 
     if( shellCommand ){
       cerr<<"- wash: "<< command <<": command not found"<<endl;  //If it returns the process has failed to start!
@@ -302,7 +333,7 @@ char* my_generator(const char* text, int state){
 
 
 //We leave the dupstr and malloc's here cause that's just how readline lib works with the my_generator it expects malloc'ed char*'s returned for matches...
-char * dupstr (char* s) {
+char* dupstr(const char* s) {
   char *r;
  
   r = (char*) xmalloc ((strlen (s) + 1));

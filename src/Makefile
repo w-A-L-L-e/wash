@@ -1,5 +1,6 @@
 CXX         = g++ 
-FLAGS       = -O2 -Wall -D_DEBUG_
+FLAGS       = -O2 -Wall
+#FLAGS       = -O2 -Wall -D_DEBUG_
 INSTALL_DIR = /usr/local/bin/
 
 all: wsbasic wash

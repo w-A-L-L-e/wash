@@ -1,25 +1,50 @@
-wash
-====
+  _____                  ____            ______   ____   ____ 
+ |\    \   _____    ____|\   \       ___|\     \ |    | |    |
+ | |    | /    /|  /    /\    \     |    |\     \|    | |    |
+ \/     / |    || |    |  |    |    |    |/____/||    |_|    |
+ /     /_  \   \/ |    |__|    | ___|    \|   | ||    .-.    |
+|     // \  \   \ |    .--.    ||    \    \___|/ |    | |    |
+|    |/   \ |    ||    |  |    ||    |\     \    |    | |    |
+|\ ___/\   \|   /||____|  |____||\ ___\|_____|   |____| |____|
+| |   | \______/ ||    |  |    || |    |     |   |    | |    |
+ \|___|/\ |    | ||____|  |____| \|____|_____|   |____| |____|
+    \(   \|____|/   \(      )/      \(    )/       \(     )/
+     '      )/       '      '        '    '         '     '  
+            ' Bash needs a wash after 2 decades ;)
+
 
 wash is bash written like I want it to be. About a decade ago started to write my own little interpreter wsbasic to learn how to write a compiler without lex/yacc. Always had the intention to make it a bash alternative, but never got around to it. This weekend finally started to implement it.
 
 ```
 Walters-MacBook-Pro:wash wschrep$ make
-g++  -O2 -Wall -c number.cpp
-g++  -O2 -Wall -c lexer.cpp
-g++  -O2 -Wall -c parser.cpp
-g++  -O2 -Wall -c treenode.cpp
-g++  -O2 -Wall -c executer.cpp
-g++  -O2 -Wall main.cpp -o wsbasic lexer.o parser.o treenode.o executer.o number.o -lncurses
-g++  -O2 -Wall -c wash.cpp
+...
 g++  -O2 -Wall -o wash wash.o number.o lexer.o parser.o treenode.o executer.o -lreadline
 
 
 Walters-MacBook-Pro:wash wschrep$ ./wash 
+  _____                  ____            ______   ____   ____ 
+ |\    \   _____    ____|\   \       ___|\     \ |    | |    |
+ | |    | /    /|  /    /\    \     |    |\     \|    | |    |
+ \/     / |    || |    |  |    |    |    |/____/||    |_|    |
+ /     /_  \   \/ |    |__|    | ___|    \|   | ||    .-.    |
+|     // \  \   \ |    .--.    ||    \    \___|/ |    | |    |
+|    |/   \ |    ||    |  |    ||    |\     \    |    | |    |
+|\ ___/\   \|   /||____|  |____||\ ___\|_____|   |____| |____|
+| |   | \______/ ||    |  |    || |    |     |   |    | |    |
+ \|___|/\ |    | ||____|  |____| \|____|_____|   |____| |____|
+    \(   \|____|/   \(      )/      \(    )/       \(     )/
+     '      )/       '      '        '    '         '     '  
+            ' Bash needs a wash after 2 decades ;)
+
+wash$ 
+
+So that's what you see after running make && ./wash
 
 WASH is an awesome bash alternative written by Walter Schreppers on a sunday 7/10/2012 ;)
 Typing quit or exit is the only way to exit !
 Auto completion is partly implemented, also command history is done with arrow keys up/down.
+
+Little demo here:
 
 wash$ ls
 

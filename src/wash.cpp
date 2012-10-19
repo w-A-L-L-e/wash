@@ -136,12 +136,11 @@ void execute_shell( const string& command ){
     words.push_back( word );
   }
 
-  //argv = ddmalloc( words.size() );
-  char** argv=(char**) malloc( words.size()+2 );
+  char** argv=(char**) malloc( words.size()+1 );
   
   for( unsigned int i=0;i<words.size();i++){
-    //dcout << "words["<<i<<"]="<<words[i]<<endl;
-    argv[i] = dupstr( words[i].c_str() );
+    //argv[i] = dupstr( words[i].c_str() );
+    argv[i] = (char*)words[i].c_str();
   }
   argv[words.size()]=(char*)NULL;
 

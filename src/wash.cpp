@@ -52,26 +52,52 @@ pid_t pID=1; //stores process id of forked process
    
 //one global parser to rule them all!
 Parser wash;
-string command;
+
+/* A static variable for holding the line. */
+static char *line_read = (char *)NULL;
+
+/* Readline and return as c++ string*/
+string rl_gets (){
+  /* If the buffer has already been allocated, return the memory
+     to the free pool. */
+  if (line_read)
+    {
+      free (line_read);
+      line_read = (char *)NULL;
+    }
+
+  /* Get a line from the user. */
+  line_read = readline ("wash$ ");
+
+  /* If the line has any text in it, save it on the history. */
+  if (line_read && *line_read)
+    add_history (line_read);
+  else
+    return "exit"; // someone pressed ctrl-d or end of file is reached here...
+
+  return string(line_read);
+}
+
+
+
+
 
 /*****************************************************************************************************************
 Function    : execute
 Parameters  : char* with command to run
 Description : This forks our application and runs the executable in foreground (it inherits the tty)
 *****************************************************************************************************************/
-void execute( char* cmd ){
+void execute( const string& command ){
   bool shellCommand=true;
 
   if (pID == 0){      //child process that executes the wanted command
-
-#ifdef _DEBUG_
-    cout << "before execlp" <<endl;
-#endif
-
-    execlp(cmd, cmd,(char*)0); //this never returns, hence the reason to fork.
+      #ifdef _DEBUG_
+          cout << "before execlp" <<endl;
+      #endif
+    execlp(command.c_str(), command.c_str(),(char*)0); //this never returns, hence the reason to fork.
 
     if( shellCommand ){
-      cerr<<"- wash: "<< string(cmd)<<": command not found"<<endl;  //If it returns the process has failed to start!
+      cerr<<"- wash: "<< command <<": command not found"<<endl;  //If it returns the process has failed to start!
     }
     else{
       cerr << wash.getErrors() << endl;
@@ -83,23 +109,21 @@ void execute( char* cmd ){
   }
   else{               //main process
     try{
-      command.assign(cmd, strlen(cmd));
       istringstream script(command);
       //Parser wash( script );
       wash.setScript( script );
-#ifdef _DEBUG_
-      cout << "will parse following: "<<string(command)<<endl;
-#endif
+      #ifdef _DEBUG_
+            cout << "will parse following: "<<string(command)<<endl;
+      #endif
       while( wash.parseStatement() ){ //go and execute our expressions
         TreeNode* root=wash.getTree();
         shellCommand=false;
-#ifdef _DEBUG_
-        root->showTree(root); //show parsetree
-#endif
+        #ifdef _DEBUG_
+                root->showTree(root); //show parsetree
+        #endif
         Executer exe(root); //execute this tree
         exe.run();          //executed our script
-
-        //delete( root );
+        //delete( root ); //we are going to handle this differently...
         break; //in future read another line here...
       }
 
@@ -135,11 +159,9 @@ void handleSignals( int sig ){
 
 int main()
 {
-    char *buf       = NULL;
     int exitStatus  = 0;
     string command  = "";
     rl_attempted_completion_function = my_completion;
-    
                                                                         
     cout<<"  _____                  ____            ______   ____   ____ "        <<endl;
     cout<<" |\\    \\   _____    ____|\\   \\       ___|\\     \\ |    | |    |"  <<endl;
@@ -163,31 +185,26 @@ int main()
           ::wait(&exitStatus); //wait for our child to finish first!!!
 
           //read a new command
-          buf = readline("wash$ ");
-          if( buf == NULL ) break;
+          command = rl_gets();
 
           //enable auto-complete
           rl_bind_key('\t',rl_complete);
- 
-          if (strcmp(buf,"quit")==0)
-            break; //exit our shell
-          if (strcmp(buf,"exit")==0)
-            break; //exit our shell
 
-          if (buf[0]!=0){
-            add_history(buf);
-            execute( buf );
+          if( command == "quit" ) break; //exit shell
+          if( command == "exit" ) break; //exit shell 
+          if( command.size()>0){
+            add_history( command.c_str() );
+            execute( command );
           }
         }
         else if (pID<0){
           cerr <<"Fork failed"<<endl;
         }
         else{ //this execute actually performs the child process!
-          if( buf != NULL ) execute( buf );
+          execute( command );
         }
     }
  
-    free(buf);
     return 0;
 }
  

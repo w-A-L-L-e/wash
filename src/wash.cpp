@@ -52,7 +52,7 @@ pid_t pID=1; //stores process id of forked process
    
 //one global parser to rule them all!
 Parser wash;
-
+string command;
 
 /*****************************************************************************************************************
 Function    : execute
@@ -61,6 +61,11 @@ Description : This forks our application and runs the executable in foreground (
 *****************************************************************************************************************/
 void execute( char* cmd ){
   if (pID == 0){      //child process that executes the wanted command
+
+#ifdef _DEBUG_
+    cout << "before execlp" <<endl;
+#endif
+
     execlp(cmd, cmd,(char*)0); //this never returns, hence the reason to fork.
 
     if( wash.getErrors().size()>0 ){
@@ -75,12 +80,14 @@ void execute( char* cmd ){
      cerr << "Failed to fork for executing a command!" << endl;
   }
   else{               //main process
-      istringstream script(cmd);
+    try{
+      command.assign(cmd, strlen(cmd));
+      istringstream script(command);
       //Parser wash( script );
       wash.setScript( script );
       bool shellCommand=true;
 #ifdef _DEBUG_
-      cout << "will parse following: "<<string(cmd)<<endl;
+      cout << "will parse following: "<<string(command)<<endl;
 #endif
       while( wash.parseStatement() ){ //go and execute our expressions
         shellCommand=false;
@@ -99,7 +106,10 @@ void execute( char* cmd ){
         //Parsing failed so we run an executable now by forking!
         pID=fork();
       } 
-
+    }
+    catch (std::bad_alloc& ba) {
+      cerr << "std::bad_alloc caught: " << ba.what() << endl;
+    }
   }
 }
 
@@ -111,11 +121,15 @@ Description : This catches things like ctrl-c -> we just override it and reset t
               that way we have bash-like behaviour and our shell only exits when you type 'quit'
 *****************************************************************************************************************/
 void handleSignals( int sig ){
+
+#ifndef _DEBUG_ //for debugging we allow ctrl-c to kill the app
   signal(sig, SIG_IGN); //ignore the default behaviour
   cout << endl <<"wash$ "<<flush; //just output newline like bash does it ;)
       
   //catch next signal also
   signal( SIGINT, handleSignals );
+#endif
+
 }
 
 int main()
@@ -125,9 +139,22 @@ int main()
     string command  = "";
     rl_attempted_completion_function = my_completion;
     
-    cout << "WASH is an awesome bash alternative written by Walter Schreppers on a sunday 7/10/2012 ;)" <<endl;
-    cout << "Typing quit or exit is the only way to exit !"<<endl;
-    cout << "Auto completion is partly implemented, also command history is done with arrow keys up/down."<<endl<<endl;
+                                                                        
+    cout<<"  _____                  ____            ______   ____   ____ "        <<endl;
+    cout<<" |\\    \\   _____    ____|\\   \\       ___|\\     \\ |    | |    |"  <<endl;
+    cout<<" | |    | /    /|  /    /\\    \\     |    |\\     \\|    | |    |"    <<endl;
+    cout<<" \\/     / |    || |    |  |    |    |    |/____/||    |_|    |"       <<endl;
+    cout<<" /     /_  \\   \\/ |    |__|    | ___|    \\|   | ||    .-.    |"     <<endl;
+    cout<<"|     // \\  \\   \\ |    .--.    ||    \\    \\___|/ |    | |    |"   <<endl;
+    cout<<"|    |/   \\ |    ||    |  |    ||    |\\     \\    |    | |    |"       <<endl;
+    cout<<"|\\ ___/\\   \\|   /||____|  |____||\\ ___\\|_____|   |____| |____|"     <<endl;
+    cout<<"| |   | \\______/ ||    |  |    || |    |     |   |    | |    |"       <<endl;
+    cout<<" \\|___|/\\ |    | ||____|  |____| \\|____|_____|   |____| |____|"      <<endl;
+    cout<<"    \\(   \\|____|/   \\(      )/      \\(    )/       \\(     )/"     <<endl;
+    cout<<"     '      )/       '      '        '    '         '     '  "         <<endl;
+    cout<<"            ' Bash needs a wash after 2 decades ;)"                   <<endl;
+    cout<<endl;            
+
     signal(SIGINT, handleSignals);
 
     while(true) {

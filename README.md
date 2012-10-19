@@ -1,19 +1,7 @@
-  _____                  ____            ______   ____   ____ 
- |\    \   _____    ____|\   \       ___|\     \ |    | |    |
- | |    | /    /|  /    /\    \     |    |\     \|    | |    |
- \/     / |    || |    |  |    |    |    |/____/||    |_|    |
- /     /_  \   \/ |    |__|    | ___|    \|   | ||    .-.    |
-|     // \  \   \ |    .--.    ||    \    \___|/ |    | |    |
-|    |/   \ |    ||    |  |    ||    |\     \    |    | |    |
-|\ ___/\   \|   /||____|  |____||\ ___\|_____|   |____| |____|
-| |   | \______/ ||    |  |    || |    |     |   |    | |    |
- \|___|/\ |    | ||____|  |____| \|____|_____|   |____| |____|
-    \(   \|____|/   \(      )/      \(    )/       \(     )/
-     '      )/       '      '        '    '         '     '  
-            ' Bash needs a wash after 2 decades ;)
-
-
-wash is bash written like I want it to be. About a decade ago started to write my own little interpreter wsbasic to learn how to write a compiler without lex/yacc. Always had the intention to make it a bash alternative, but never got around to it. This weekend finally started to implement it.
+WASH
+====
+wash is bash written like it should be in 2012! 
+About a decade ago started to write my own little interpreter wsbasic to learn how to write a compiler without lex/yacc. Always had the intention to make it a bash alternative, but never got around to it. This weekend finally started to implement it.
 
 ```
 Walters-MacBook-Pro:wash wschrep$ make

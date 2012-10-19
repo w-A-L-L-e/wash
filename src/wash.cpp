@@ -83,7 +83,7 @@ void execute( char* cmd ){
   }
   else{               //main process
     try{
-      command.assign(strdup(cmd), strlen(cmd));
+      command.assign(cmd, strlen(cmd));
       istringstream script(command);
       //Parser wash( script );
       wash.setScript( script );

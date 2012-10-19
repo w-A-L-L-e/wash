@@ -124,14 +124,34 @@ Fri Oct 19 17:28:24 CEST 2012
 Fri Oct 19 17:28:24 CEST 2012
 
 
-Just added semi-colon support and all keywords in auto complete if you press tab on empty line:
+wash$ foreach line in run("ls -lh") println(line+"  -> you can execute something else here")
+total 272  -> you can execute something else here
+-rw-r--r--   1 wschrep  staff   139B Oct 19 20:48 Makefile  -> you can execute something else here
+-rw-r--r--   1 wschrep  staff   6.9K Oct 20 00:34 README.md  -> you can execute something else here
+drwxr-xr-x@ 18 wschrep  staff   612B Oct 16 16:12 examples  -> you can execute something else here
+drwxr-xr-x  24 wschrep  staff   816B Oct 20 00:29 src  -> you can execute something else here
+-rw-r--r--   1 wschrep  staff    25B Oct 16 17:22 test.b  -> you can execute something else here
+-rwxr-xr-x   1 wschrep  staff   118K Oct 20 00:29 wash  -> you can execute something else here
 
+
+
+The hard way if you want to use echo (but print and println are cooler ;) 
+
+wash$ for i=0 to 5 print run("echo 'yeah also works'")
+yeah also works
+yeah also works
+yeah also works
+yeah also works
+yeah also works
+yeah also works
+
+Pressing tab on empty line for now shows you all the keywords of wash programming language (and yeah you can type f<tab> etc:
 wash$ 
-           <          =          >          and        by         end        for        if         input      number     print      quit       seperated  string     to         write      
-           !=         <=         ==         >=         begin      else       exit       foreach    in         not        or         println    run        step       substr     while      
-
-wash$ for i=1 to 10; print(i);println("");
-12345678910
+           !=         <          <=         =          =          ==         >          >=         and      
+           begin      by         else       end        exit       for        foreach    if         in         input    
+           not        number     or         print      println    quit       run        seperated  step       string   
+           substr     to         while      write    
+           wash$ 
 
 
 ```
@@ -157,12 +177,4 @@ improve auto completion (it's already better than few days ago http://web.mit.ed
 I'm aware of zsh which is also cool indeed but I want a syntax more like ruby or other modern languages. Not something from the 90's for my shell ;).
 Again making ruby as your shell is cool but it's bloated: wash is now only 120k! compared to bash'es +1Mb size. And it will stay small cause the largest part (programming language) is
 already included!
-
-```
-Walters-MacBook-Pro:wash wschrep$ ls -lh wash
--rwxr-xr-x  1 wschrep  staff   113K Oct 12 14:39 wash
-
-Walters-MacBook-Pro:wash wschrep$ ls -lh /bin/bash 
--r-xr-xr-x  1 root  wheel   1.3M Apr 17 20:34 /bin/bash
-```
 

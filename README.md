@@ -138,13 +138,14 @@ wash$ for i=1 to 10; print(i);println("");
 
 
 
-It's verry early alpha fase now. Not ready to use as main shell yet. For instance running any commands like top, ls, vim etc all work but you can't pass arguments yet ;)
-Need to work on functions and multiple line scripts in interactive mode. Already fixed the feature so you don't need to enter begin/end around a single statement and added {,} shortcuts to
-define scopes/blocks like in c.
-Look in examples dir for some working scripts: it's already a complete programming language with functions and forloops etc.!
+Look in examples dir for some working scripts: it's already a complete programming language with functions and forloops etc.
+It's in early alpha stage now. Just got multi argument commands kinda working now ;)
 
-First up todo's are commands with arguments and then improve auto completion (just use code from this http://web.mit.edu/gnu/doc/html/rlman_2.html ).
-Then it should already be a good enough replacement for bash for me ;). Will need more work on promts, environment vars etc like .bashrc => will make a .washrc.
+TODO: 
+pipes aka cat bla.txt | grep "something"
+fix bug in multi arg commands (it's allmost good enough for me to use it as bash replacement, once this bug is squashed ;) as piping can be done already with stat=run("some command") etc.).
+.washrc like .bashrc => especially for the path which is now hardcoded to : /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/CrossPack-AVR/bin
+improve auto completion (it's already better than few days ago http://web.mit.edu/gnu/doc/html/rlman_2.html ).
 
 I'm aware of zsh which is also cool indeed but I want a syntax more like ruby or other modern languages. Not something from the 90's for my shell ;).
 Again making ruby as your shell is cool but it's bloated: wash is now only 120k! compared to bash'es +1Mb size. And it will stay small cause the largest part (programming language) is

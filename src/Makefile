@@ -29,7 +29,7 @@ treetest: treenode.o treetest.cpp
 wash.o: wash.cpp
 	$(CXX) $(FLAGS) -c wash.cpp
 
-wash: wash.o number.o lexer.o parser.o treenode.o executer.o
+wash: wash.o number.o lexer.o parser.o treenode.o executer.o 
 	$(CXX) $(FLAGS) -o wash $^ -lreadline
 
 clean:

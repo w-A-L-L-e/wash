@@ -34,29 +34,67 @@ bugreport(log): This is new written on a sunday and has some bugs.
 #include "executer.h"
 using namespace std;
 
-#include <sys/wait.h> //to wait for forked process to finish
+#include <sys/wait.h>         // to wait for forked process to finish
+
+//We need 2 globals (the pid and command auto completion)
+//The casts get rid of all warnings, but jeeez going to std::vector instead because this is uuuuugly :(
+char* cmd [] ={ 
+                (char*)"exit", 
+                (char*)"quit", 
+                (char*)"if", 
+                (char*)"else", 
+                (char*)"for", 
+                (char*)"to", 
+                (char*)"step" ,
+                (char*)"foreach", 
+                (char*)"in", 
+                (char*)"seperated", 
+                (char*)"by", 
+                (char*)"while", 
+                (char*)"number", 
+                (char*)"string", 
+                (char*)"begin", 
+                (char*)"end", 
+                (char*)"print", 
+                (char*)"println", 
+                (char*)"input", 
+                (char*)"run", 
+                (char*)"write", 
+                (char*)"substr", 
+                (char*)"or", 
+                (char*)"and", 
+                (char*)"not", 
+                (char*)">=", 
+                (char*)">", 
+                (char*)"<", 
+                (char*)"<=", 
+                (char*)"!=", 
+                (char*)"=", 
+                (char*)"==", 
+                (char*)"=", 
+                (char*)" ", 0 };
 
 //these will change... will rewrite this stuff
 static char** my_completion(const char*, int ,int);
-char* my_generator(const char*,int);
-char * dupstr (char*);
-void *xmalloc (int);
- 
-//We need 2 globals (the pid and command auto completion)
-//The casts get rid of all warnings, but jeeez going to std::vector instead because this is uuuuugly :(
-char* cmd [] ={ (char*)"hello", (char*)"world", (char*)"hell" ,(char*)"word", (char*)"quit", (char*)" ", 0 };
-pid_t pID=1; //stores process id of forked process
+char*         my_generator(const char*,int);
+char*         dupstr (char*);
+void*         xmalloc (int);
+pid_t         pID=1;            //stores process id of forked process
 
-//try a c++ version here?
-//vector<string> commands;
-   
 //one global parser to rule them all!
-Parser wash;
+Parser        wash;
 
 /* A static variable for holding the line. */
 static char *line_read = (char *)NULL;
 
-/* Readline and return as c++ string*/
+
+
+
+/*****************************************************************************************************************
+Function    : rl_gets
+Parameters  : 
+Description : calls readline and returns a c++ std::string 
+*****************************************************************************************************************/
 string rl_gets (){
   /* If the buffer has already been allocated, return the memory
      to the free pool. */
@@ -215,7 +253,6 @@ static char** my_completion( const char * text , int start,  int end)
     char **matches;
  
     matches = (char **)NULL;
- 
     //we only do this if it's with a start at 0 meaning you tab on empty prompt
     if (start == 0) matches = rl_completion_matches ((char*)text, &my_generator);
     //else //not needed, the else just borks us here
@@ -225,9 +262,21 @@ static char** my_completion( const char * text , int start,  int end)
  
 }
 
-//todo :need to rewrite this to c++, copied+bugfixed this from the web but it's cryptic and not what we want...
-char* my_generator(const char* text, int state)
-{
+/*=====================================================================================================================================================
+  Function    : my_generator
+  Description : The generator function is called repeatedly from completion_matches (), returning a string each time. 
+                
+                The arguments to the generator function are text and state. text is the partial word to be completed. 
+                state is zero the first time the function is called, allowing the generator to perform any necessary initialization, 
+                and a positive non-zero integer for each subsequent call. 
+                
+                When the generator function returns (char *)NULL this signals completion_matches () that there are no more possibilities left. 
+                Usually the generator function computes the list of possible completions when state is zero, and returns them one at a time on subsequent calls. 
+                
+                Each string the generator function returns as a match must be allocated with malloc(); 
+                Readline frees the strings when it has finished with them. 
+======================================================================================================================================================*/
+char* my_generator(const char* text, int state){
     static int list_index, len;
     char *name;
  
@@ -236,23 +285,11 @@ char* my_generator(const char* text, int state)
         len = strlen (text);
     }
 
-    /*cpp version is broke :(
-    string inputText(text);
+    //basically all we need is a properly filled vector or even better a has that we can return matches with here
+    //-> write this with a proper c++ class here...
 
-    for( unsigned int i=0;i<commands.size();i++){
-      //if ( commands[i] == inputText ){
-        return (char*)commands[i].c_str();
-      //}
-      //else{
-       // cout << "commands[i]="<<commands[i]<<endl;
-       // cout << "inputText  ="<<inputText<<endl;
-      //}
-    }
-    */
-
-    //while (name = cmd[list_index]) { //original code from net
     while ((name = cmd[list_index]) && cmd[list_index] != 0 ){ //add a check for end of list to avoid segfaults ;)
-        list_index++;
+        list_index++; //this seems rather inefficient, looping everything in cmd every time!
  
         if (strncmp (name, text, len) == 0)
             return (dupstr(name));
@@ -264,7 +301,7 @@ char* my_generator(const char* text, int state)
 }
 
 
-//dupstr and xmalloc are not needed if we write this properly...
+//We leave the dupstr and malloc's here cause that's just how readline lib works with the my_generator it expects malloc'ed char*'s returned for matches...
 char * dupstr (char* s) {
   char *r;
  
@@ -273,16 +310,13 @@ char * dupstr (char* s) {
   return (r);
 }
  
-void * xmalloc (int size)
-{
+void * xmalloc (int size){
     void *buf;
- 
     buf = malloc (size);
     if (!buf) {
         fprintf (stderr, "Error: Out of memory. Exiting.'n");
         exit (1);
     }
- 
     return buf;
 }
 

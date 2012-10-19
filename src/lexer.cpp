@@ -131,7 +131,7 @@ void Lexer::skipComment(){
 
 void Lexer::skipWhite(){
   char look=getChar();
-  while( !in->eof() && isspace(look) ) look=getChar();
+  while( !in->eof() && ( isspace(look) || (look==';') ) ) look=getChar();
   ungetChar(look);
 }
 

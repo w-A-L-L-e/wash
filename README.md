@@ -123,6 +123,17 @@ Fri Oct 19 17:28:24 CEST 2012
 Fri Oct 19 17:28:24 CEST 2012
 Fri Oct 19 17:28:24 CEST 2012
 
+
+Just added semi-colon support and all keywords in auto complete if you press tab on empty line:
+
+wash$ 
+           <          =          >          and        by         end        for        if         input      number     print      quit       seperated  string     to         write      
+           !=         <=         ==         >=         begin      else       exit       foreach    in         not        or         println    run        step       substr     while      
+
+wash$ for i=1 to 10; print(i);println("");
+12345678910
+
+
 ```
 
 

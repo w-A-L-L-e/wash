@@ -110,7 +110,8 @@ string rl_gets (){
   /* If the line has any text in it, save it on the history. */
   if (line_read && *line_read)
     add_history (line_read);
-  else
+  
+  if( !line_read )
     return "exit"; // someone pressed ctrl-d or end of file is reached here...
 
   return string(line_read);

@@ -178,6 +178,7 @@ It's in early alpha stage now. Just got multi argument commands kinda working no
 
 TODO: 
 ```
+environ stuff: set and get things like PWD, PATH, LOGIN, etc 
 pipes like: 
   cat bla.txt | grep "something"
 pseudo piping can be done already with stat=run("some command") etc.

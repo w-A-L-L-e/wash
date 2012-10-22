@@ -35,6 +35,7 @@ bugreport(log): This is new written on a sunday and has some bugs.
 using namespace std;
 
 #include <sys/wait.h>         // to wait for forked process to finish
+extern char **environ;        // here we will set things like PWD, PATH etc.
 
 //We need 2 globals (the pid and command auto completion)
 //The casts get rid of all warnings, but jeeez going to std::vector instead because this is uuuuugly :(

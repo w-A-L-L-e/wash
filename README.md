@@ -32,14 +32,18 @@ WASH is an awesome bash alternative written by Walter Schreppers on a sunday 7/1
 Typing quit or exit is the only way to exit !
 Auto completion is partly implemented, also command history is done with arrow keys up/down.
 
-Little demo here:
+Little demo here executing commands etc. is just like bash (you have history and autocompletion thanks to gnu read_line):
+-------------------------------------------------------------------------------------------------------------------------
+wash$ ls src/
+executer.cpp  executer.o  lexer.h  main.cpp  ntree.cpp   number.h  parser.cpp  parser.o  treenode.cpp  treenode.o  wash.o
+executer.h    lexer.cpp   lexer.o  Makefile  number.cpp  number.o  parser.h    tokens.h  treenode.h    wash.cpp    wsbasic
 
-wash$ ls
+wash$ vi src/executer.cpp
 
-Makefile     examples     executer.h   lexer.cpp    lexer.o      ntree.cpp    number.h     parser.cpp   parser.o     treenode.cpp treenode.o   wash.cpp     wsbasic
-README.md    executer.cpp executer.o   lexer.h      main.cpp     number.cpp   number.o     parser.h     tokens.h     treenode.h   wash         wash.o
 
-wash$ println("hello world") println(3*4)
+But ontop of that, you get a really nice scripting language: 
+------------------------------------------------------------
+wash$ println("hello world"); println(3*4)
 hello world
 12
 
@@ -163,15 +167,14 @@ It's in early alpha stage now. Just got multi argument commands kinda working no
 
 TODO: 
 ```
-pipes aka cat bla.txt | grep "something"
+pipes like: 
+  cat bla.txt | grep "something"
+pseudo piping can be done already with stat=run("some command") etc.
 
-fix bug in multi arg commands (it's allmost good enough for me to use it as bash replacement, once this bug is squashed ;) as piping can be done already with stat=run("some command") etc.).
 .washrc like .bashrc => especially for the path which is now hardcoded to : /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/CrossPack-AVR/bin
 
 improve auto completion (it's already better than few days ago http://web.mit.edu/gnu/doc/html/rlman_2.html ).
 ```
-
-
 
 
 I'm aware of zsh which is also cool indeed but I want a syntax more like ruby or other modern languages. Not something from the 90's for my shell ;).

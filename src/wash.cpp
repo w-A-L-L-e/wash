@@ -144,10 +144,13 @@ void execute_shell( const string& command ){
   }
   argv[words.size()]=(char*)NULL;
 
+#ifdef __APPLE__
   //somehow argv is not yet build up correctly TODO HERE!!!. Also the second param is the path here, we need something like PATH=$PATH:... equivalent for wash!
   const char* path = "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/CrossPack-AVR/bin";
-
   execvP( argv[0], path, argv );
+#else
+  execvp( argv[0], argv );
+#endif
 }
 
 

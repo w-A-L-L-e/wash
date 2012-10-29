@@ -174,24 +174,6 @@ wash$
 
 
 Look in examples dir for some working scripts: it's already a complete programming language with functions and forloops etc.
-It's in early alpha stage now. Just got multi argument commands kinda working now ;)
+It's in early alpha stage now. 
 
-TODO: 
-```
-environ stuff: set and get things like PWD, PATH, LOGIN, etc 
-pipes like: 
-  cat bla.txt | grep "something"
-pseudo piping can be done already with stat=run("some command") etc.
-
-.washrc like .bashrc => especially for the path which is now hardcoded to : /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/CrossPack-AVR/bin
-
-improve auto completion (it's already better than few days ago http://web.mit.edu/gnu/doc/html/rlman_2.html ).
-
-it's still alpha but a few more hours coding and I can use this daily at work instead of bash ;)
-```
-
-
-I'm aware of zsh which is also cool indeed but I want a syntax more like ruby or other modern languages. Not something from the 90's for my shell ;).
-Again making ruby as your shell is cool but it's bloated: wash is now only 120k! compared to bash'es +1Mb size. And it will stay small cause the largest part (programming language) is
-already included!
 

@@ -32,14 +32,18 @@ WASH is an awesome bash alternative written by Walter Schreppers on a sunday 7/1
 Typing quit or exit is the only way to exit !
 Auto completion is partly implemented, also command history is done with arrow keys up/down.
 
-Little demo here:
+Little demo here executing commands etc. is just like bash (you have history and autocompletion thanks to gnu read_line ):
+-------------------------------------------------------------------------------------------------------------------------
+wash$ ls src/
+executer.cpp  executer.o  lexer.h  main.cpp  ntree.cpp   number.h  parser.cpp  parser.o  treenode.cpp  treenode.o  wash.o
+executer.h    lexer.cpp   lexer.o  Makefile  number.cpp  number.o  parser.h    tokens.h  treenode.h    wash.cpp    wsbasic
 
-wash$ ls
+wash$ vi src/executer.cpp
 
-Makefile     examples     executer.h   lexer.cpp    lexer.o      ntree.cpp    number.h     parser.cpp   parser.o     treenode.cpp treenode.o   wash.cpp     wsbasic
-README.md    executer.cpp executer.o   lexer.h      main.cpp     number.cpp   number.o     parser.h     tokens.h     treenode.h   wash         wash.o
 
-wash$ println("hello world") println(3*4)
+But ontop of that, you get a really nice scripting language: 
+------------------------------------------------------------
+wash$ println("hello world"); println(3*4)
 hello world
 12
 
@@ -114,7 +118,7 @@ wash$ println( 4000/6 )
 wash$ println( 4000/6+6 )
 672.667
 
-Syntax etc is getting more type friendly every day ;)
+Syntax etc is getting more type friendly every day, here some types of forloops:
 
 wash$ for i=1 to 5 print run("date")
 Fri Oct 19 17:28:24 CEST 2012
@@ -133,6 +137,17 @@ drwxr-xr-x  24 wschrep  staff   816B Oct 20 00:29 src  -> you can execute someth
 -rw-r--r--   1 wschrep  staff    25B Oct 16 17:22 test.b  -> you can execute something else here
 -rwxr-xr-x   1 wschrep  staff   118K Oct 20 00:29 wash  -> you can execute something else here
 
+
+Foreach can also get a seperated by as here:
+
+wash$ foreach word in run("ls -lh") seperated by " " print(word+",")
+total,136K
+drwxrwxr-x,2,wschrep,wschrep,4.0K,Oct,19,19:37,examples
+-rw-rw-r--,1,wschrep,wschrep,,139,Oct,19,17:09,Makefile
+-rw-rw-r--,1,wschrep,wschrep,7.6K,Oct,22,12:05,README.md
+drwxrwxr-x,2,wschrep,wschrep,4.0K,Oct,22,11:58,src
+-rwxrwxr-x,1,wschrep,wschrep,113K,Oct,22,11:58,wash
+,wash$
 
 
 The hard way if you want to use echo (but print and println are cooler ;) 
@@ -163,7 +178,10 @@ It's in early alpha stage now. Just got multi argument commands kinda working no
 
 TODO: 
 ```
-pipes aka cat bla.txt | grep "something"
+environ stuff: set and get things like PWD, PATH, LOGIN, etc 
+pipes like: 
+  cat bla.txt | grep "something"
+pseudo piping can be done already with stat=run("some command") etc.
 
 .washrc like .bashrc => especially for the path which is now hardcoded to : /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/CrossPack-AVR/bin
 
@@ -171,8 +189,6 @@ improve auto completion (it's already better than few days ago http://web.mit.ed
 
 it's still alpha but a few more hours coding and I can use this daily at work instead of bash ;)
 ```
-
-
 
 
 I'm aware of zsh which is also cool indeed but I want a syntax more like ruby or other modern languages. Not something from the 90's for my shell ;).

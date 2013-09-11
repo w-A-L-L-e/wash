@@ -15,12 +15,18 @@ begin
   println ""
 end
 
+#function with parameters and brackets c-style!
+test2(a,b,c,d){
+  println "a=", a, ", b=", b, ", c=", c
+  println "a+b+c= ", a+b+c
+  println ""
+}
+
 
 #function that returns something
-square(i)
-begin
+square(i){
   return i*i
-end
+}
 
 
 fac(i)
@@ -37,7 +43,8 @@ begin
   glob=5
   hello()
   test(1,2,3)
-  
+  test2(1,2,3,4)
+
   j=1
   while j<10 begin
     println "fac(",j,")=",fac(j)

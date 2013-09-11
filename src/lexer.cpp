@@ -89,29 +89,32 @@ int Lexer::getName(string& s){
 
 void Lexer::checkKeywords(token& t){
   if(t.type == tokId){
-    if(      t.str == "begin"     ) t.type=tokBegin;
-    else if( t.str == "end"       ) t.type=tokEnd;
-    else if( t.str == "while"     ) t.type=tokWhile;
-    else if( t.str == "if"        ) t.type=tokIf;
-    else if( t.str == "else"      ) t.type=tokElse;
-    else if( t.str == "print"     ) t.type=tokPrint;
-    else if( t.str == "println"   ) t.type=tokPrintLn;
-    else if( t.str == "input"     ) t.type=tokInput;
-    else if( t.str == "for"       ) t.type=tokFor;
-    else if( t.str == "to"        ) t.type=tokTo;
-    else if( t.str == "step"      ) t.type=tokStep;
-    else if( t.str == "and"       ) t.type=tokAnd;
-    else if( t.str == "or"        ) t.type=tokOr;
-    else if( t.str == "not"       ) t.type=tokNot;
-    else if( t.str == "return"    ) t.type=tokReturn;
-    else if( t.str == "break"     ) t.type=tokBreak;
-    else if( t.str == "run"       ) t.type=tokRun;
-    else if( t.str == "write"     ) t.type=tokWrite;
-    else if( t.str == "substr"    ) t.type=tokSubstr;
-    else if( t.str == "foreach"   ) t.type=tokForEach;
-    else if( t.str == "in"        ) t.type=tokIn;
-    else if( t.str == "seperated" ) t.type=tokSeperated;
-    else if( t.str == "by"        ) t.type=tokBy;
+    if(      t.str == "begin"     ) t.type = tokBegin;
+    else if( t.str == "end"       ) t.type = tokEnd;
+    else if( t.str == "while"     ) t.type = tokWhile;
+    else if( t.str == "if"        ) t.type = tokIf;
+    else if( t.str == "else"      ) t.type = tokElse;
+    else if( t.str == "print"     ) t.type = tokPrint;
+    else if( t.str == "println"   ) t.type = tokPrintLn;
+    else if( t.str == "input"     ) t.type = tokInput;
+    else if( t.str == "for"       ) t.type = tokFor;
+    else if( t.str == "to"        ) t.type = tokTo;
+    else if( t.str == "step"      ) t.type = tokStep;
+    else if( t.str == "and"       ) t.type = tokAnd;
+    else if( t.str == "or"        ) t.type = tokOr;
+    else if( t.str == "not"       ) t.type = tokNot;
+    else if( t.str == "return"    ) t.type = tokReturn;
+    else if( t.str == "break"     ) t.type = tokBreak;
+    else if( t.str == "run"       ) t.type = tokRun;
+    else if( t.str == "write"     ) t.type = tokWrite;
+    else if( t.str == "substr"    ) t.type = tokSubstr;
+    else if( t.str == "foreach"   ) t.type = tokForEach;
+    else if( t.str == "in"        ) t.type = tokIn;
+    else if( t.str == "seperated" ) t.type = tokSeperated;
+    else if( t.str == "by"        ) t.type = tokBy;
+    
+    else if( t.str == "{"         ) t.type = tokBegin;
+    else if( t.str == "}"         ) t.type = tokEnd;
         
     else t.type=tokId;
   }

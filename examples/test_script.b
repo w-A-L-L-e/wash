@@ -1,3 +1,4 @@
+#!/usr/local/bin/wsbasic
 begin
 output=run("
 ls

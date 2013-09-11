@@ -1,4 +1,4 @@
-#!../wsbasic
+#!/usr/local/bin/wsbasic
 
 begin
 

@@ -1,3 +1,4 @@
+#!/usr/local/bin/wsbasic
 ls( arg )
 begin
   println "ls received arg="+arg

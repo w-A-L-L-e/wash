@@ -57,7 +57,11 @@ Mon Oct  8 10:05:48 CEST 2012
 Mon Oct  8 10:05:48 CEST 2012
 Mon Oct  8 10:05:48 CEST 2012
 
-wash$ nr=0 foreach line in run("ls -l") begin print nr println "\t"+line nr=nr+1 end
+
+Adding line numbers:
+nr=0 foreach line in run("ls -l") begin   print nr println "\t"+line nr=nr+1   end
+
+wash$ nr=0 foreach line in run("ls -l"){ print nr println "\t"+line nr=nr+1 }
 0 total 960
 1 -rw-r--r--@  1 wschrep  staff     929 Oct  7 22:29 Makefile
 2 -rw-r--r--   1 wschrep  staff    2295 Oct  8 10:08 README.md

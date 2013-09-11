@@ -176,4 +176,30 @@ wash$
 Look in examples dir for some working scripts: it's already a complete programming language with functions and forloops etc.
 It's in early alpha stage now. 
 
+Stuff that needs work on is keeping the directory when you use cd and multi line inline scripts.
+For now all needs to be a oneliner or you load it by just invoking from a file.
+
+```
+wash$ for i=1 to 4 begin b=run("date") println(b) end
+Wed Sep 11 17:06:04 CEST 2013
+
+Wed Sep 11 17:06:04 CEST 2013
+
+Wed Sep 11 17:06:04 CEST 2013
+
+Wed Sep 11 17:06:04 CEST 2013
+
+wash$ 
+```
+
+Ideally this should become:
+
+```
+wash$ for i=1 to 4 begin 
+b=run("date") 
+println(b) 
+end
+...
+```
+
 

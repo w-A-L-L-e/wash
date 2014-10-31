@@ -27,6 +27,7 @@ bugreport(log): This is new written on a sunday and has some bugs.
 #include <signal.h>
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -164,8 +165,8 @@ Parameters  : char* with command to run
 Description : This forks our application and runs the executable in foreground (it inherits the tty)
 *****************************************************************************************************************/
 void execute( const string& command ){
-  bool shellCommand=true;
 
+  bool shellCommand=true;
   if (pID == 0){      //child process that executes the wanted command
       #ifdef _DEBUG_
           cout << "before execlp" <<endl;
@@ -235,8 +236,34 @@ void handleSignals( int sig ){
 
 }
 
-int main()
+
+void executeFile( const string& filename ){
+      cout << "executing file: "<<filename<<endl;
+
+      ifstream script(filename);
+      //wash.setScript( script );
+      Parser washer( script );
+
+      #ifdef _DEBUG_
+            cout << "will parse following: "<<string(command)<<endl;
+      #endif
+
+      if( washer.parse() ){
+        Executer runner( washer.getTree() );
+        runner.run();
+      }
+      
+}
+
+int main( int argc, char** argv)
 {
+
+    if( argc > 1 ){ //execute given script
+      executeFile( argv[1] );
+      return 0;
+    }
+
+
     int exitStatus  = 0;
     string command  = "";
     rl_attempted_completion_function = my_completion;

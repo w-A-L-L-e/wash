@@ -1,4 +1,4 @@
-#!/usr/local/bin/wsbasic
+#!/bin/wash
 begin
 
   #simple for loops

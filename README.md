@@ -1,8 +1,9 @@
 WASH
 ====
-wash is bash written like it should be in 2012! 
-About a decade ago started to write my own little interpreter wsbasic to learn how to write a compiler without lex/yacc. Always had the intention to make it a bash alternative, but never got around to it. This weekend finally started to implement it.
-
+wash is targeting to be a cleaner version of bash. Due to recent vulnerability like shellshock found it's apparent bash has become so complicated there are a lot of 
+possible issues with it that we don't know of yet. 
+About a decade ago started to write my own little interpreter wsbasic to learn how to write an interpreter without using tools like lex/yacc (which are excellent but if we can do it without these it's
+easier on developers to get bootstrapped into the whole parsing world + imho you get a better feel for how things work in a practical way...). Always had the intention to make wsbasic also a bash alternative, but never got around to it. This weekend finally started to implement it. If anyone feels like helping out by forking feel free to do so. Happy coding everyone!
 ```
 Walters-MacBook-Pro:wash wschrep$ make
 ...

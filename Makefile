@@ -1,4 +1,4 @@
-INSTALL_DIR = /bin/
+INSTALL_DIR = /usr/local/bin/
 
 all:
 	$(MAKE) -C src
@@ -10,6 +10,9 @@ clean:
 
 install:
 	cp wash $(INSTALL_DIR)
+
+uninstall:
+	@rm -rf /usr/local/bin/wash
 
 
 

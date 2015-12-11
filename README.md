@@ -208,3 +208,6 @@ wash$ for i=1 to 4 {
 ```
 
 
+Just became dad of a beautiful son Noah Schreppers this year which is great. Unfurtunately a whole lot of other stuff went wrong this year. But it looks like everything will be ok soon and hopefully I'll find time to work on this some more. Imagine a faster than bash scripting language (already the case). Much more lightweight (already the case) and therefore soon more stable bash like environment (Work in progress ;) ). It's an idea playing in my head already decades ago it just seems to never be the 'in the stars'. Hopefully 2016 will bring some more spare time. Meanwhile work and bills to pay come first again :S
+
+
